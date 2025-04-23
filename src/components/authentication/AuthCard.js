@@ -3,6 +3,7 @@
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { XMarkIcon } from "@heroicons/react/24/outline"
+import { loginWithEmailandPassword } from "../../services/authService"
 
 export function AuthCard({ open, setOpen }) {
   const [email, setEmail] = useState("")
@@ -15,8 +16,10 @@ export function AuthCard({ open, setOpen }) {
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      // Add your login logic here
       console.log("Logging in with", { email, password })
+      // //Calling the login function from authService
+      loginWithEmailandPassword(email, password)
+      
       setOpen(false)
     } catch (err) {
       setError("Login failed. Please try again", {error})
