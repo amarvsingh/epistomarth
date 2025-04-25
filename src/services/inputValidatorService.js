@@ -1,10 +1,26 @@
 export function validateEmail(email) {
     //check if Email is not empty
     if (!email) {
-        return false
+       return {
+            isValid: false,
+            message: "Please enter your Email Adrdress",
+        };
+       }
+    else {
+        //Check if Email is in the correct format
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!re.test(String(email).toLowerCase())) {
+            return {
+                isValid: false,
+                message: "Please enter a valid Email Address",
+            };
+        } else {
+            return {
+                isValid: true,
+                message: "",
+            };
+        }
     }
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return re.test(String(email).toLowerCase())
 }
 
 export function validatePassword(password) {

@@ -1,15 +1,18 @@
 "use client"
 
+import React from 'react';
 import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { XMarkIcon } from "@heroicons/react/24/outline"
 import { loginWithEmailandPassword } from "../../services/authService"
+import { validateEmail, validatePassword } from '../../services/inputValidatorService';
+import InputValidationAlert from "../ui/dialogs/InputValidationAlert"
 
 export function AuthCard({ open, setOpen }) {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState(false)
+  const [password, setPassword] = useState(false)
   const [error, setError] = useState(null)
-
+  const [showAlert, setShowAlert] = React.useState(false)
 
   //TODO: Add your authentication logic here
   //TODO: See a way to change state of UI on Sucessful Login
@@ -17,16 +20,29 @@ export function AuthCard({ open, setOpen }) {
     e.preventDefault()
     try {
       console.log("Logging in with", { email, password })
+      // Handling Input Validation before calling the login function
+      validateInputForLoginWithEmailandPassword(email, password)
       // //Calling the login function from authService
       loginWithEmailandPassword(email, password)
       
-      setOpen(false)
+      // setOpen(false)
     } catch (err) {
       setError("Login failed. Please try again", {error})
     }
   }
 
+  const validateInputForLoginWithEmailandPassword = (email, password) => {
+    // Validate email
+    const emailValidationResult = validateEmail(email)
+    console.log(emailValidationResult)
+    if (!emailValidationResult.isValid) {
+      setShowAlert(true)
+    }
+  }
+
   return (
+    <>
+    !<InputValidationAlert open={showAlert} setOpen={setShowAlert}/>
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={setOpen}>
         <Transition.Child
@@ -105,5 +121,7 @@ export function AuthCard({ open, setOpen }) {
         </div>
       </Dialog>
     </Transition.Root>
+
+    </>
   )
 }
