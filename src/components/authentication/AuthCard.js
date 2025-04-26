@@ -9,10 +9,13 @@ import { validateEmail, validatePassword } from '../../services/inputValidatorSe
 import InputValidationAlert from "../ui/dialogs/InputValidationAlert"
 
 export function AuthCard({ open, setOpen }) {
-  const [email, setEmail] = useState(false)
-  const [password, setPassword] = useState(false)
+  
+  //Constants for User Input on the Login Form
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [error, setError] = useState(null)
   const [showAlert, setShowAlert] = React.useState(false)
+
 
   //TODO: Add your authentication logic here
   //TODO: See a way to change state of UI on Sucessful Login
@@ -36,13 +39,16 @@ export function AuthCard({ open, setOpen }) {
     const emailValidationResult = validateEmail(email)
     console.log(emailValidationResult)
     if (!emailValidationResult.isValid) {
+      setOpen(false)
       setShowAlert(true)
     }
   }
 
   return (
     <>
-    !<InputValidationAlert open={showAlert} setOpen={setShowAlert}/>
+    <div>
+     <InputValidationAlert open={showAlert} setOpen={setShowAlert} setPreviousOpen = {setOpen}/>
+    </div>
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={setOpen}>
         <Transition.Child
@@ -121,7 +127,6 @@ export function AuthCard({ open, setOpen }) {
         </div>
       </Dialog>
     </Transition.Root>
-
     </>
   )
 }

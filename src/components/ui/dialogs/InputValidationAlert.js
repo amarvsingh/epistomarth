@@ -3,9 +3,9 @@
 import { useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import { AuthCard } from '../../authentication/AuthCard'
 
-export default function InputValidationAlert({ open, setOpen }) {
-  const [showDialog, setShowDialog] = useState(false)
+export default function InputValidationAlert({ open, setOpen, setPreviousOpen }) {
 
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10">
@@ -49,7 +49,14 @@ export default function InputValidationAlert({ open, setOpen }) {
               <button
                 type="button"
                 data-autofocus
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                    //Closing the alert
+                     setOpen(false)
+                     //Opening the Previous overlay depending on the prop passed
+                    if (setPreviousOpen) {
+                        setPreviousOpen(true)
+                        }                       
+                    }}
                 className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto"
               >
                 Cancel
