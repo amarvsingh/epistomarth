@@ -1,49 +1,52 @@
+import { VALIDATION_MESSAGES } from "../constants/validationMessages";
+
+// Function to validate the email
 export function validateEmail(email) {
-  //check if Email is not empty
+  // Check if the email is empty or not
   if (!email) {
     return {
       isValid: false,
-      message: "Please enter your Email Adrdress",
+      ...VALIDATION_MESSAGES.EMAIL.EMPTY,
     };
   } else {
-    //Check if Email is in the correct format
+    // Regular expression to validate the email format
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!re.test(String(email).toLowerCase())) {
       return {
         isValid: false,
-        message: "Please enter a valid Email Address",
+        ...VALIDATION_MESSAGES.EMAIL.INVALID_FORMAT,
       };
     } else {
       return {
         isValid: true,
-        message: "",
+        ...VALIDATION_MESSAGES.EMAIL.VALID,
       };
     }
   }
 }
 
+// Function to validate the password
 export function validatePassword(password) {
-  // Check if password is not empty
+  // Check if the password is empty or not
   if (!password) {
     return {
       isValid: false,
-      message: "Please enter your Password",
+      ...VALIDATION_MESSAGES.PASSWORD.EMPTY,
     };
   } else {
-    // Check if password is in the correct format
+    // Regular expression to validate the password format
     // Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character
     const re =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!re.test(String(password))) {
       return {
         isValid: false,
-        message:
-          "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+        ...VALIDATION_MESSAGES.PASSWORD.INVALID_FORMAT,
       };
     } else {
       return {
         isValid: true,
-        message: "",
+        ...VALIDATION_MESSAGES.PASSWORD.VALID,
       };
     }
   }

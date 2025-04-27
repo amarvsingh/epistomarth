@@ -8,7 +8,7 @@ import { loginWithEmailandPassword } from "../../services/authService";
 import {
   validateEmail,
   validatePassword,
-} from "../../services/inputValidatorService";
+} from "../../utils/inputValidatorService";
 import InputValidationAlert from "../ui/dialogs/InputValidationAlert";
 
 export function AuthCard({ open, setOpen }) {
@@ -46,8 +46,8 @@ export function AuthCard({ open, setOpen }) {
     if (!emailValidationResult.isValid) {
       // Setting UI state for the alert
       updateAlertState(
-        "Invalid Email",
-        emailValidationResult.message,
+        emailValidationResult.SUBJECT,
+        emailValidationResult.MESSAGE,
         "OK",
         ""
       );
@@ -58,8 +58,8 @@ export function AuthCard({ open, setOpen }) {
       if (!passwordValidationResult.isValid) {
         // Setting UI state for the alert
         updateAlertState(
-          "Invalid Password",
-          passwordValidationResult.message,
+          passwordValidationResult.SUBJECT,
+          passwordValidationResult.MESSAGE,
           "OK",
           ""
         );
