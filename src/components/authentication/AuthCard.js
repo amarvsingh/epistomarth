@@ -45,15 +45,41 @@ export function AuthCard({ open, setOpen }) {
     console.log(emailValidationResult);
     if (!emailValidationResult.isValid) {
       // Setting UI state for the alert
-
-      setOpen(false);
-      setShowAlert(true);
-      setAlertTitle("Invalid Email");
-      setAlertText(emailValidationResult.message);
-      setButton1Text("OK");
-      setButton2Text("");
+      updateAlertState(
+        "Invalid Email",
+        emailValidationResult.message,
+        "OK",
+        ""
+      );
       return;
+    } else {
+      // Validate password
+      const passwordValidationResult = validatePassword(password);
+      if (!passwordValidationResult.isValid) {
+        // Setting UI state for the alert
+        updateAlertState(
+          "Invalid Password",
+          passwordValidationResult.message,
+          "OK",
+          ""
+        );
+        return;
+      } else {
+        // If both email and password are valid, proceed with login
+        console.log("Both email and password are valid");
+        //TODO: Call the login function from authService, Implementation Pending
+      }
     }
+  };
+
+  // Function to update the alert state on the UI on Input Validation Failure
+  const updateAlertState = (title, text, button1, button2) => {
+    setOpen(false);
+    setShowAlert(true);
+    setAlertTitle(title);
+    setAlertText(text);
+    setButton1Text(button1);
+    setButton2Text(button2);
   };
 
   return (
