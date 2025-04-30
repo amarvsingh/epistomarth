@@ -1,11 +1,15 @@
 import axios from "axios";
+import RequestTypes from "../constants/requestTypes";
 
 // Implement the login function
 export async function loginWithEmailandPassword(email, password) {
   try {
-    const response = await axios.post("http://localhost:8080/login", {
-      email: email,
-      password: password,
+    const response = await axios.post("http://localhost:8080/api/request", {
+      type: RequestTypes.LOGIN,
+      data: {
+        email: email,
+        password: password,
+      },
     });
     console.log("Login successful", response.data);
     console.log("Response from Server", response.data);
