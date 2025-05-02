@@ -38,7 +38,7 @@ export function AuthCard({ open, setOpen }) {
     }
   };
 
-  const validateInputForLoginWithEmailandPassword = (email, password) => {
+  const validateInputForLoginWithEmailandPassword = async (email, password) => {
     // Validate email
     const emailValidationResult = validateEmail(email);
     console.log(emailValidationResult);
@@ -67,7 +67,8 @@ export function AuthCard({ open, setOpen }) {
         // If both email and password are valid, proceed with login
         console.log("Both email and password are valid");
         //TODO: Call the login function from authService, Implementation Pending
-        loginWithEmailandPassword(email, password);
+        const loginResult = await loginWithEmailandPassword(email, password);
+        console.log("Login Result", loginResult);
       }
     }
   };
