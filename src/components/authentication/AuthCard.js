@@ -4,7 +4,7 @@ import React from "react";
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { loginWithEmailandPassword } from "../../services/authService";
+import { loginWithEmailandPassword } from "../../services/authentication/authService";
 import {
   validateEmail,
   validatePassword,

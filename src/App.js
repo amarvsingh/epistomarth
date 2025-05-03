@@ -6,25 +6,26 @@ import LoadingAlert from "./components/ui/dialogs/LoadingAlert";
 import RequestTypes from "./constants/requestTypes";
 import { Input } from "@headlessui/react";
 import InputValidationAlert from "./components/ui/dialogs/InputValidationAlert";
+import { checkAuthentication } from "./services/authentication/authService";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
 
+  //Initializing the app
+  //First we need to check if the user is logged in or not
+  //If the user is logged in, we need to fetch the user data
+
   useEffect(() => {
     const initializeApp = async () => {
+      // Check if the user is logged in
       try {
-        const response = await axios.post("http://localhost:8080/api/login", {
-          type: RequestTypes.LOGIN,
-          data: {
-            email: "amars8379@gmail.com",
-            password: "Amar222@s",
-          },
+        const isLoggedIn = await checkAuthentication().then((res) => {
+          console.log("Is user logged in?", res);
         });
-        setData(response.data);
       } catch (error) {
-        console.error("Error initializing app:", error);
+        console.error("Error checking authentication:", error);
         setError(error.message);
       } finally {
         setIsLoading(false);
