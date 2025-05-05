@@ -5,8 +5,10 @@ import RequestTypes from "../../constants/requestTypes";
 // This function retrieves the token from local storage
 export function storeToken(token) {
   // Store the token in local storage
-  if (!checkTokenId()) {
+  try {
     localStorage.setItem("tokenID", token);
+  } catch (error) {
+    console.error("Error storing token:", error);
   }
 }
 
